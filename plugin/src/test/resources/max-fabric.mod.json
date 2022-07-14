@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "example",
+  "version": "0.0.1",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "net.fabricmc.example.ExampleMod",
+      "net.fabricmc.example.ExampleMod::handle",
+      {
+        "adapter": "kotlin",
+        "value": "package.ClassName"
+      }
+    ]
+  },
+  "jars": [
+    {
+      "file": "nested/vendor/dependency.jar"
+    }
+  ],
+  "languageAdapters": {
+    "kotlin": "net.fabricmc.language.kotlin.KotlinAdapter"
+  },
+  "mixins": [
+    "modid.mixins.json",
+    {
+      "config": "modid.client-mixins.json",
+      "environment": "client"
+    }
+  ],
+  "accessWidener": "modid.accesswidener",
+  "depends": {
+    "mod": "1.0.0"
+  },
+  "recommends": {
+    "mod": "1.0.0"
+  },
+  "suggests": {
+    "mod": "1.0.0"
+  },
+  "breaks": {
+    "mod": "1.0.0"
+  },
+  "conflicts": {
+    "mod": "1.0.0"
+  },
+  "name": "Example Mod",
+  "description": "Mod Description",
+  "contact": {
+    "email": "mail@example.org",
+    "irc": "irc://example.org",
+    "homepage": "https://example.org",
+    "issues": "https://example.org",
+    "sources": "git://example.org"
+  },
+  "authors": [
+    {
+      "name": "You",
+      "contact": {
+        "email": "mail@example.org"
+      }
+    }
+  ],
+  "contributors": [
+    {
+      "name": "You",
+      "contact": {
+        "email": "mail@example.org"
+      }
+    }
+  ],
+  "license": [ "CC0-1.0", "GPL-3.0" ],
+  "icon": {
+    "64": "assets/modid/icon-64.png",
+    "128": "assets/modid/icon-128.png"
+  }
+}
