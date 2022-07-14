@@ -115,6 +115,33 @@ public class GenerateFabricModJsonTaskFunctionalTest {
             }
         """, "{ \"schemaVersion\": 1, \"breaks\": {\"a\": \"b\", \"c\": \"d\"} }");
     }
+   
+    @Test
+    public void authors() {
+        modJsonTest("fabrigradle { authors { name 'a' email 'b' irc 'c' homepage 'd' } }", "{ \"schemaVersion\": 1, \"authors\": [{\"name\": \"a\", \"contact\": {\"email\": \"b\", \"irc\": \"c\", \"homepage\": \"d\"}}] }");
+    }
+
+    @Test
+    public void contributors() {
+        modJsonTest("fabrigradle { contributors { name 'a' email 'b' irc 'c' homepage 'd' } }", "{ \"schemaVersion\": 1, \"contributors\": [{\"name\": \"a\", \"contact\": {\"email\": \"b\", \"irc\": \"c\", \"homepage\": \"d\"}}] }");
+    }
+
+    @Test
+    public void contact() {
+        modJsonTest("fabrigradle { contact { email 'b' \n irc 'c' \n homepage 'd' \n issues 'e' \n sources 'f' } }", "{ \"schemaVersion\": 1, \"contact\": {\"email\": \"b\", \"irc\": \"c\", \"homepage\": \"d\", \"issues\": \"e\", \"sources\": \"f\"} }");
+    }
+
+    @Test
+    public void license() {
+        modJsonTest("fabrigradle { license 'a' }", "{ \"schemaVersion\": 1, \"license\": \"a\" }");
+        modJsonTest("fabrigradle { license 'a', 'b' }", "{ \"schemaVersion\": 1, \"license\": [\"a\", \"b\"] }");
+    }
+
+    @Test
+    public void icon() {
+        modJsonTest("fabrigradle { icon 'file' }", "{ \"schemaVersion\": 1, \"icon\": \"file\" }");
+        modJsonTest("fabrigradle { icons { size 64 file 'b' \n size 128 file 'd' } }", "{ \"schemaVersion\": 1, \"icon\": {\"64\": \"b\", \"128\": \"d\"} }");
+    }
 
     private String getGeneratedFabricModJson(FabrigradleTestBuild build) throws IOException {
         return Files.readString(build.projectDir.toPath().resolve("build/resources/main/fabric.mod.json"));

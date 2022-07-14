@@ -72,11 +72,34 @@ public class FabrigradleExtension {
     @Input @Optional @Getter @Setter String name;
     @Input @Optional @Getter @Setter String description;
 
-    @Input @Optional @Getter People authors;
+    @Nested @Optional @Getter People authors;
     public void authors(Action<? super People> action) {
         if (authors == null) authors = new People();
         action.execute(authors);
     }
+
+    @Nested @Optional @Getter People contributors;
+    public void contributors(Action<? super People> action) {
+        if (contributors == null) contributors = new People();
+        action.execute(contributors);
+    }
+
+    @Nested @Optional @Getter Contact contact;
+    public void contact(Action<? super Contact> action) {
+        if (contact == null) contact = new Contact();
+        action.execute(contact);
+    }
+
+    @Input @Optional @Getter List<String> license = new ArrayList<String>();
+    void license(String... license) { this.license.addAll(List.of(license)); }
+
+    @Nested @Optional @Getter Icons icons;
+    public void icons(Action<? super Icons> action) {
+        if (icons == null) icons = new Icons();
+        action.execute(icons);
+    }
+
+    @Input @Optional @Getter @Setter String icon;
 }
 
 class Entrypoints {
@@ -130,22 +153,58 @@ class Dependency {
 }
 
 class People {
-    @Nested @Optional @Getter List<Person> authors = new ArrayList<Person>();
+    @Nested @Optional @Getter List<Person> people = new ArrayList<Person>();
 
     Person name(String name) {
-        Person author = new Person(name);
-        authors.add(author);
-        return author;
+        Person person = new Person(name);
+        people.add(person);
+        return person;
     }
 }
 
 class Person {
 
-    // TODO: figure out how to allow for custom properties?
+    // TODO: figure out how to allow custom properties?
 
-    @Input @Getter String name;
-    @Input @Getter String email;
+    @Input @Optional @Getter String name;
+    @Input @Optional @Getter String email;
+    @Input @Optional @Getter String irc;
+    @Input @Optional @Getter String homepage;
 
     Person(String name) { this.name = name; }
+    Person email(String email) { this.email = email; return this; }
+    Person irc(String irc) { this.irc = irc; return this; }
+    Person homepage(String homepage) { this.homepage = homepage; return this; }
+}
+
+class Contact {
+    @Input @Optional @Getter String email;
+    @Input @Optional @Getter String irc;
+    @Input @Optional @Getter String homepage;
+    @Input @Optional @Getter String issues;
+    @Input @Optional @Getter String sources;
+
     void email(String email) { this.email = email; }
+    void irc(String irc) { this.irc = irc; }
+    void homepage(String homepage) { this.homepage = homepage; }
+    void issues(String issues) { this.issues = issues; }
+    void sources(String sources) { this.sources = sources; }
+}
+
+class Icons {
+    @Nested @Optional @Getter List<Icon> icons = new ArrayList<Icon>();
+
+    Icon size(int size) {
+        Icon icon = new Icon(size);
+        icons.add(icon);
+        return icon;
+    }
+}
+
+class Icon {
+    @Input @Getter int size;
+    @Input @Getter String file;
+
+    Icon(int size) { this.size = size; }
+    void file(String file) { this.file = file; }
 }

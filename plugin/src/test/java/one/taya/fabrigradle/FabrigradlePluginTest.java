@@ -8,9 +8,6 @@ import org.gradle.api.Project;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * A simple unit test for the 'Fabrigradle.greeting' plugin.
- */
 class FabrigradlePluginTest {
     @Test void pluginRegistersATask() {
         // Create a test project and apply the plugin
