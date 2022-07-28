@@ -58,9 +58,9 @@ public abstract class GenerateFabricModJson extends DefaultTask {
         
         EntrypointContainer entrypoints = new EntrypointContainer();
         if(ext.getEntrypoints() != null) {
-            entrypoints.main = ext.getEntrypoints().main.stream().map(Entrypoint::new).toList();
-            entrypoints.client = ext.getEntrypoints().client.stream().map(Entrypoint::new).toList();
-            entrypoints.server = ext.getEntrypoints().server.stream().map(Entrypoint::new).toList();
+            entrypoints.main = ext.getEntrypoints().getMain().get().stream().map(Entrypoint::new).toList();
+            entrypoints.client = ext.getEntrypoints().getClient().get().stream().map(Entrypoint::new).toList();
+            entrypoints.server = ext.getEntrypoints().getServer().get().stream().map(Entrypoint::new).toList();
         }
 
         Map<String, String> languageAdapters = 
@@ -87,23 +87,23 @@ public abstract class GenerateFabricModJson extends DefaultTask {
             : null;
 
         Icon icon = null;
-        if(ext.getIcon() != null) {
-            icon = new Icon(ext.getIcon());
+        if(ext.getIcon().isPresent()) {
+            icon = new Icon(ext.getIcon().get());
         } else if(ext.getIcons() != null) {
             icon = new Icon(ext.getIcons().icons.stream().collect(Collectors.toMap(i -> i.size, i -> i.file)));
         }
 
         FabricModJson fmj = FabricModJson.builder()
             .schemaVersion(1)
-            .id                 (ext.getId())
-            .version            (ext.getVersion())
-            .name               (ext.getName())
-            .description        (ext.getDescription())
-            .environment        (ext.getEnvironment())
+            .id                 (ext.getId().getOrNull())
+            .version            (ext.getVersion().getOrNull())
+            .name               (ext.getName().getOrNull())
+            .description        (ext.getDescription().getOrNull())
+            .environment        (ext.getEnvironment().getOrNull())
             .entrypoints        (entrypoints)
-            .jars               (ext.getJars().stream().map(NestedJarEntry::new).toList())
+            .jars               (ext.getJars().get().stream().map(NestedJarEntry::new).toList())
             .languageAdapters   (languageAdapters)
-            .accessWidener      (ext.getAccessWidener())
+            .accessWidener      (ext.getAccessWidener().getOrNull())
             .depends            (parseDependencies(ext.getDepends()))
             .recommends         (parseDependencies(ext.getRecommends()))
             .suggests           (parseDependencies(ext.getSuggests()))
@@ -112,7 +112,7 @@ public abstract class GenerateFabricModJson extends DefaultTask {
             .authors            (parsePeople(ext.getAuthors()))
             .contributors       (parsePeople(ext.getContributors()))
             .contact            (contact)
-            .license            (new License(ext.getLicense()))
+            .license            (new License(ext.getLicense().get()))
             .icon               (icon)
             .build();
 

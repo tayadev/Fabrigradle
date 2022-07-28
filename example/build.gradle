@@ -1,0 +1,34 @@
+plugins {
+  id 'one.taya.fabrigradle' version '3.0.0'
+}
+ 
+version '1.0.0'
+
+fabrigradle {
+  id 'example'
+  name 'Cool Name'
+  authors {
+    name 'Me!' email 'email@example.org'
+  }
+  environment 'server'
+  entrypoints {
+    main 'one.taya.mod.Mod'
+  }
+
+  mixins {
+    packageName 'one.taya.mod.mixin'
+    mixins 'TestMixin', 'AnotherMixin'
+    client 'ClientMixin'
+    server 'ServerMixin'
+    refmap 'idk'
+    priority 10
+    plugin 'MixinPlugin'
+    required true
+    minVersion '0.8'
+    compatibilityLevel 'JAVA_8'
+    // injectors {
+      // defaultRequire 1
+    // }
+  }
+
+}

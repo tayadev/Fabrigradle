@@ -8,8 +8,8 @@ public class FabrigradlePlugin implements Plugin<Project> {
         FabrigradleExtension ext = project.getExtensions().create("fabrigradle", FabrigradleExtension.class);
 
         // defaults
-        ext.id = project.getName();
-        ext.version = project.getVersion().toString();
+        ext.getId().convention(project.getName());
+        ext.getVersion().convention(project.getVersion().toString());
 
         project.getTasks().register("generateFabricModJson", GenerateFabricModJson.class, task -> {
             task.getConfig().set(ext);
