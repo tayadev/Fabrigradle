@@ -1,0 +1,43 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "/workspaces/FabrigradlebuildFabrigradle",
+			"script": "build",
+			"description": "Assembles and tests this project.",
+			"group": "build",
+			"project": "Fabrigradle",
+			"buildFile": "/workspaces/Fabrigradle/build.gradle",
+			"rootProject": "Fabrigradle",
+			"projectFolder": "/workspaces/Fabrigradle",
+			"workspaceFolder": "/workspaces/Fabrigradle",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "Build",
+			"icon": {"id": "package"}
+		},
+		{
+			"type": "gradle",
+			"id": "/workspaces/FabrigradlepublishToMavenLocalFabrigradle",
+			"script": "publishToMavenLocal",
+			"description": "Publishes all Maven publications produced by this project to the local Maven cache.",
+			"group": "publishing",
+			"project": "Fabrigradle",
+			"buildFile": "/workspaces/Fabrigradle/build.gradle",
+			"rootProject": "Fabrigradle",
+			"projectFolder": "/workspaces/Fabrigradle",
+			"workspaceFolder": "/workspaces/Fabrigradle",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "Publish to local maven repo",
+			"icon": {"id": "repo-push"},
+		}
+	]
+}

@@ -2,6 +2,7 @@ package one.taya.fabrigradle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.tasks.Input;
@@ -36,6 +37,11 @@ public class FabrigradleExtension {
     }
 
     // TODO: figure out mixin handling
+    @Nested @Optional @Getter @Setter Mixins mixins;
+    public void mixins(Action<? super Mixins> action) {
+        if (mixins == null) mixins = new Mixins();
+        action.execute(mixins);
+    }
 
     @Input @Optional @Getter @Setter String accessWidener;
 
@@ -207,4 +213,20 @@ class Icon {
 
     Icon(int size) { this.size = size; }
     void file(String file) { this.file = file; }
+}
+
+class Mixins {
+    @Input @Getter String packageName;
+    @Input @Optional @Getter List<String> mixins;
+    @Input @Optional @Getter List<String> client;
+    @Input @Optional @Getter List<String> server;
+    @Input @Optional @Getter String refmap;
+    @Input @Optional @Getter Integer priority;
+    @Input @Optional @Getter String plugin;
+    @Input @Optional @Getter Boolean required;
+    @Input @Optional @Getter String minVersion;
+    @Input @Optional @Getter Boolean setSourceFile;
+    @Input @Optional @Getter Boolean verbose;
+    @Input @Optional @Getter String compatibilityLevel;
+    @Input @Optional @Getter Map<String, Integer> injectors;
 }
