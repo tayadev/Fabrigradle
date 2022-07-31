@@ -17,9 +17,10 @@ public class FabrigradleTestBuild {
 
     public FabrigradleTestBuild() throws IOException {
         this.projectDir = new File("build/functionalTest");
-        if(this.projectDir.exists()) deleteDir(this.projectDir.toPath());
+        if(this.projectDir.exists()) deleteProjectDir(this.projectDir.toPath());
         this.projectDir.mkdirs();
         writeString(new File(this.projectDir, "settings.gradle"), "");
+        writeString(new File(this.projectDir, "gradle.properties"), "org.gradle.jvmargs=-Xmx1G");
 
         addConfig("""
             plugins {
@@ -47,10 +48,11 @@ public class FabrigradleTestBuild {
         }
     }
 
-    private static void deleteDir(Path path) throws IOException {
+    private static void deleteProjectDir(Path path) throws IOException {
         Files.walk(path)
             .sorted(Comparator.reverseOrder())
             .map(Path::toFile)
+            .filter(f -> f.getName() != ".gradle")
             .forEach(File::delete);
     }
 }

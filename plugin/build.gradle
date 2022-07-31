@@ -8,10 +8,16 @@ group 'one.taya'
 version '3.0.0'
 
 repositories {
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net'
+    }
     mavenCentral()
 }
 
 dependencies {
+    //FIXME: when applied as plugin it tries to re-resolve this dep and seearches in the wrong repo???
+    implementation 'fabric-loom:fabric-loom.gradle.plugin:0.12-SNAPSHOT'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
     implementation 'commons-io:commons-io:2.11.0'
 
