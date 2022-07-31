@@ -7,12 +7,19 @@ public class FabrigradlePlugin implements Plugin<Project> {
     public void apply(Project project) {
         FabrigradleExtension ext = project.getExtensions().create("fabrigradle", FabrigradleExtension.class);
 
-        // defaults
-        ext.getId().convention(project.getName());
-        ext.getVersion().convention(project.getVersion().toString());
+        project.afterEvaluate(p -> {
+            // defaults
+            ext.getId().convention(project.getName());
+            ext.getVersion().convention(project.getVersion().toString());
+        });
 
         project.getTasks().register("generateFabricModJson", GenerateFabricModJson.class, task -> {
             task.getConfig().set(ext);
+        });
+
+        project.getTasks().register("generateMixinJson", GenerateMixinJson.class, task -> {
+            task.getConfig().set(ext);
+            task.dependsOn("generateFabricModJson");
         });
     }
 }

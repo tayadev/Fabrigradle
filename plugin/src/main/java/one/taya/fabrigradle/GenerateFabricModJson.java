@@ -20,6 +20,7 @@ import one.taya.fabrigradle.FabricModJson.EntrypointContainer;
 import one.taya.fabrigradle.FabricModJson.FabricModJson;
 import one.taya.fabrigradle.FabricModJson.Icon;
 import one.taya.fabrigradle.FabricModJson.License;
+import one.taya.fabrigradle.FabricModJson.Mixin;
 import one.taya.fabrigradle.FabricModJson.NestedJarEntry;
 import one.taya.fabrigradle.FabricModJson.Person;
 import one.taya.fabrigradle.FabricModJson.VersionRange;
@@ -38,15 +39,15 @@ public abstract class GenerateFabricModJson extends DefaultTask {
 
     Map<String, VersionRange> parseDependencies(Dependencies dependecies) {
         return
-            dependecies != null
+            dependecies.dependencies.size() > 0
             ? dependecies.dependencies.stream().collect(Collectors.toMap(Dependency::getId, d -> new VersionRange(d.version)))
             : null;
     }
 
     List<Person> parsePeople(People people) {
         return
-            people != null
-            ? people.people.stream().map((one.taya.fabrigradle.Person p) -> { return new Person(p.name, ContactInformation.builder().email(p.email).irc(p.irc).homepage(p.homepage).build()); }).toList()
+            people.people.size() > 0
+            ? people.people.stream().map((one.taya.fabrigradle.Person p) -> { return new Person(p.name, new ContactInformation().setEmail(p.email).setIrc(p.irc).setHomepage(p.homepage)); }).toList()
             : null;
     }
 
@@ -75,16 +76,13 @@ public abstract class GenerateFabricModJson extends DefaultTask {
             : null;
 
         ContactInformation contact =
-            ext.getContact() != null
-            ? ContactInformation
-                .builder()
-                .email(ext.getContact().email)
-                .irc(ext.getContact().irc)
-                .homepage(ext.getContact().homepage)
-                .issues(ext.getContact().issues)
-                .sources(ext.getContact().sources)
-                .build()
-            : null;
+            new ContactInformation()
+                .setEmail(ext.getContact().getEmail().getOrNull())
+                .setIrc(ext.getContact().getIrc().getOrNull())
+                .setHomepage(ext.getContact().getHomepage().getOrNull())
+                .setIssues(ext.getContact().getIssues().getOrNull())
+                .setSources(ext.getContact().getSources().getOrNull());
+        // TODO: figure out how to make contact = null when empty
 
         Icon icon = null;
         if(ext.getIcon().isPresent()) {
@@ -93,28 +91,28 @@ public abstract class GenerateFabricModJson extends DefaultTask {
             icon = new Icon(ext.getIcons().icons.stream().collect(Collectors.toMap(i -> i.size, i -> i.file)));
         }
 
-        FabricModJson fmj = FabricModJson.builder()
-            .schemaVersion(1)
-            .id                 (ext.getId().getOrNull())
-            .version            (ext.getVersion().getOrNull())
-            .name               (ext.getName().getOrNull())
-            .description        (ext.getDescription().getOrNull())
-            .environment        (ext.getEnvironment().getOrNull())
-            .entrypoints        (entrypoints)
-            .jars               (ext.getJars().get().stream().map(NestedJarEntry::new).toList())
-            .languageAdapters   (languageAdapters)
-            .accessWidener      (ext.getAccessWidener().getOrNull())
-            .depends            (parseDependencies(ext.getDepends()))
-            .recommends         (parseDependencies(ext.getRecommends()))
-            .suggests           (parseDependencies(ext.getSuggests()))
-            .conflicts          (parseDependencies(ext.getConflicts()))
-            .breaks             (parseDependencies(ext.getBreaks()))
-            .authors            (parsePeople(ext.getAuthors()))
-            .contributors       (parsePeople(ext.getContributors()))
-            .contact            (contact)
-            .license            (new License(ext.getLicense().get()))
-            .icon               (icon)
-            .build();
+        FabricModJson fmj = new FabricModJson()
+            .setSchemaVersion(1)
+            .setId                 (ext.getId().getOrNull())
+            .setVersion            (ext.getVersion().getOrNull())
+            .setName               (ext.getName().getOrNull())
+            .setDescription        (ext.getDescription().getOrNull())
+            .setEnvironment        (ext.getEnvironment().getOrNull())
+            .setEntrypoints        (entrypoints)
+            .setJars               (ext.getJars().get().size() > 0 ? ext.getJars().get().stream().map(NestedJarEntry::new).toList() : null)
+            .setLanguageAdapters   (languageAdapters)
+            .setAccessWidener      (ext.getAccessWidener().getOrNull())
+            .setDepends            (parseDependencies(ext.getDepends()))
+            .setRecommends         (parseDependencies(ext.getRecommends()))
+            .setSuggests           (parseDependencies(ext.getSuggests()))
+            .setConflicts          (parseDependencies(ext.getConflicts()))
+            .setBreaks             (parseDependencies(ext.getBreaks()))
+            .setAuthors            (parsePeople(ext.getAuthors()))
+            .setContributors       (parsePeople(ext.getContributors()))
+            .setContact            (contact)
+            .setLicense            (ext.getLicense().get().size() > 0  ? new License(ext.getLicense().get()) : null)
+            .setIcon               (icon)
+            .setMixins(ext.getMixins().getPackageName().isPresent() ? List.of(new Mixin("mixins.json")) : null);
 
         new ObjectMapper().writeValue(outFile, fmj);
 

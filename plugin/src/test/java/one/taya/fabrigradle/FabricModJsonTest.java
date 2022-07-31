@@ -32,29 +32,28 @@ public class FabricModJsonTest {
     public void exampleModFabricModJson() throws JSONException, IOException, URISyntaxException {
 
         // Using example from fabric example mod to test this out
-        FabricModJson fmj = FabricModJson.builder()
-            .schemaVersion(1)
-            .id("modid")
-            .version("1.0.0")
-            .name("Example Mod")
-            .description("This is an example description! Tell everyone what your mod is about!")
-            .authors(List.of(new Person("Me!")))
-            .contact(ContactInformation.builder().homepage("https://fabricmc.net/").sources("https://github.com/FabricMC/fabric-example-mod").build())
-            .license(new License("CC0-1.0"))
-            .icon(new Icon("assets/modid/icon.png"))
-            .environment(Environment.ALL)
-            .entrypoints(EntrypointContainer.builder().main(List.of(new Entrypoint("net.fabricmc.example.ExampleMod"))).build())
-            .mixins(List.of(new Mixin("modid.mixins.json")))
-            .depends(Map.of(
+        FabricModJson fmj = new FabricModJson()
+            .setSchemaVersion(1)
+            .setId("modid")
+            .setVersion("1.0.0")
+            .setName("Example Mod")
+            .setDescription("This is an example description! Tell everyone what your mod is about!")
+            .setAuthors(List.of(new Person("Me!")))
+            .setContact(new ContactInformation().setHomepage("https://fabricmc.net/").setSources("https://github.com/FabricMC/fabric-example-mod"))
+            .setLicense(new License("CC0-1.0"))
+            .setIcon(new Icon("assets/modid/icon.png"))
+            .setEnvironment(Environment.ALL)
+            .setEntrypoints(EntrypointContainer.builder().main(List.of(new Entrypoint("net.fabricmc.example.ExampleMod"))).build())
+            .setMixins(List.of(new Mixin("modid.mixins.json")))
+            .setDepends(Map.of(
                 "fabricloader", new VersionRange(">=0.14.6"),
                 "fabric", new VersionRange("*"),
                 "minecraft", new VersionRange("~1.19"),
                 "java", new VersionRange(">=17")
             ))
-            .suggests(Map.of(
+            .setSuggests(Map.of(
                 "another-mod", new VersionRange("*")
-            ))
-            .build();
+            ));
 
         String serialized = new ObjectMapper().writeValueAsString(fmj);
         String expected = Files.readString(Paths.get(getClass().getClassLoader().getResource("exampleMod-fabric.mod.json").toURI()));
@@ -65,41 +64,40 @@ public class FabricModJsonTest {
     @Test
     public void maxModFabricModJson() throws JSONException, IOException, URISyntaxException {
 
-        FabricModJson fmj = FabricModJson.builder()
-            .schemaVersion(1)
-            .id("example")
-            .version("0.0.1")
-            .environment(Environment.SERVER)
-            .entrypoints(EntrypointContainer.builder()
+        FabricModJson fmj = new FabricModJson()
+            .setSchemaVersion(1)
+            .setId("example")
+            .setVersion("0.0.1")
+            .setEnvironment(Environment.SERVER)
+            .setEntrypoints(EntrypointContainer.builder()
                 .main(List.of(
                     new Entrypoint("net.fabricmc.example.ExampleMod"),
                     new Entrypoint("net.fabricmc.example.ExampleMod::handle"),
                     new Entrypoint("package.ClassName", "kotlin")
                 ))
                 .build())
-            .jars(List.of(new NestedJarEntry("nested/vendor/dependency.jar")))
-            .languageAdapters(Map.of("kotlin", "net.fabricmc.language.kotlin.KotlinAdapter"))
-            .mixins(List.of(new Mixin("modid.mixins.json"), new Mixin("modid.client-mixins.json", Environment.CLIENT)))
-            .accessWidener("modid.accesswidener")
-            .depends(Map.of("mod", new VersionRange("1.0.0")))
-            .recommends(Map.of("mod", new VersionRange("1.0.0")))
-            .suggests(Map.of("mod", new VersionRange("1.0.0")))
-            .breaks(Map.of("mod", new VersionRange("1.0.0")))
-            .conflicts(Map.of("mod", new VersionRange("1.0.0")))
-            .name("Example Mod")
-            .description("Mod Description")
-            .contact(ContactInformation.builder()
-                .email("mail@example.org")
-                .irc("irc://example.org")
-                .homepage("https://example.org")
-                .issues("https://example.org")
-                .sources("git://example.org")
-                .build())
-            .authors(List.of(new Person("You", ContactInformation.builder().email("mail@example.org").build())))
-            .contributors(List.of(new Person("You", ContactInformation.builder().email("mail@example.org").build())))
-            .license(new License("CC0-1.0", "GPL-3.0"))
-            .icon(new Icon(Map.of(64, "assets/modid/icon-64.png", 128, "assets/modid/icon-128.png")))
-            .build();
+            .setJars(List.of(new NestedJarEntry("nested/vendor/dependency.jar")))
+            .setLanguageAdapters(Map.of("kotlin", "net.fabricmc.language.kotlin.KotlinAdapter"))
+            .setMixins(List.of(new Mixin("modid.mixins.json"), new Mixin("modid.client-mixins.json", Environment.CLIENT)))
+            .setAccessWidener("modid.accesswidener")
+            .setDepends(Map.of("mod", new VersionRange("1.0.0")))
+            .setRecommends(Map.of("mod", new VersionRange("1.0.0")))
+            .setSuggests(Map.of("mod", new VersionRange("1.0.0")))
+            .setBreaks(Map.of("mod", new VersionRange("1.0.0")))
+            .setConflicts(Map.of("mod", new VersionRange("1.0.0")))
+            .setName("Example Mod")
+            .setDescription("Mod Description")
+            .setContact(new ContactInformation()
+                .setEmail("mail@example.org")
+                .setIrc("irc://example.org")
+                .setHomepage("https://example.org")
+                .setIssues("https://example.org")
+                .setSources("git://example.org")
+            )
+            .setAuthors(List.of(new Person("You", new ContactInformation().setEmail("mail@example.org"))))
+            .setContributors(List.of(new Person("You", new ContactInformation().setEmail("mail@example.org"))))
+            .setLicense(new License("CC0-1.0", "GPL-3.0"))
+            .setIcon(new Icon(Map.of(64, "assets/modid/icon-64.png", 128, "assets/modid/icon-128.png")));
 
         String serialized = new ObjectMapper().writeValueAsString(fmj);
         String expected = Files.readString(Paths.get(getClass().getClassLoader().getResource("max-fabric.mod.json").toURI()));

@@ -22,15 +22,14 @@ public class MixinJsonTest {
     public void exampleModMixinJson() throws JSONException, IOException, URISyntaxException {
 
         // Using example from fabric example mod to test this out
-        MixinJson mj = MixinJson.builder()
-            .required(true)
-            .minVersion("0.8")
-            .packageName("net.fabricmc.example.mixin")
-            .compatibilityLevel("JAVA_8")
-            .mixins(List.of())
-            .client(List.of("ExampleMixin"))
-            .injectors(Map.of("defaultRequire", 1))
-            .build();
+        MixinJson mj = new MixinJson()
+            .setRequired(true)
+            .setMinVersion("0.8")
+            .setPackageName("net.fabricmc.example.mixin")
+            .setCompatibilityLevel("JAVA_8")
+            .setMixins(List.of())
+            .setClient(List.of("ExampleMixin"))
+            .setInjectors(Map.of("defaultRequire", 1));
 
         String serialized = new ObjectMapper().writeValueAsString(mj);
         System.out.println(serialized);

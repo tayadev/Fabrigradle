@@ -28,6 +28,7 @@ public abstract class FabrigradleExtension {
     public void entrypoints(Action<? super Entrypoints> action) { action.execute(getEntrypoints()); }
 
     @Input @Optional abstract public ListProperty<String> getJars();
+    public void jars(String... jars) { getJars().addAll(jars); }
 
     @Nested abstract public LanguageAdapters getLanguageAdapters();
     public void languageAdapters(Action<? super LanguageAdapters> action) { action.execute(getLanguageAdapters()); }
@@ -36,6 +37,7 @@ public abstract class FabrigradleExtension {
     public void mixins(Action<? super Mixins> action) { action.execute(getMixins()); }
 
     @Input @Optional abstract public Property<String> getAccessWidener();
+    public void accessWidener(String accessWidener) { getAccessWidener().set(accessWidener); }
 
     @Nested abstract public Dependencies getDepends();
     public void depends(Action<? super Dependencies> action) { action.execute(getDepends()); }
@@ -68,11 +70,13 @@ public abstract class FabrigradleExtension {
     public void contact(Action<? super Contact> action) { action.execute(getContact()); }
 
     @Input @Optional abstract public ListProperty<String> getLicense();
+    public void license(String... license) { getLicense().addAll(license); }
 
     @Nested abstract public Icons getIcons();
     public void icons(Action<? super Icons> action) { action.execute(getIcons()); }
 
     @Input @Optional abstract public Property<String> getIcon();
+    void icon(String icon) { getIcon().set(icon); }
 }
 
 @NoArgsConstructor
@@ -149,18 +153,21 @@ class Person {
 }
 
 @NoArgsConstructor
-class Contact {
-    @Input @Optional @Getter String email;
-    @Input @Optional @Getter String irc;
-    @Input @Optional @Getter String homepage;
-    @Input @Optional @Getter String issues;
-    @Input @Optional @Getter String sources;
+abstract class Contact {
+    @Input @Optional abstract public Property<String> getEmail();
+    void email(String email) { getEmail().set(email); }
 
-    void email(String email) { this.email = email; }
-    void irc(String irc) { this.irc = irc; }
-    void homepage(String homepage) { this.homepage = homepage; }
-    void issues(String issues) { this.issues = issues; }
-    void sources(String sources) { this.sources = sources; }
+    @Input @Optional abstract public Property<String> getIrc();
+    void irc(String irc) { getIrc().set(irc); }
+
+    @Input @Optional abstract public Property<String> getHomepage();
+    void homepage(String homepage) { getHomepage().set(homepage); }
+
+    @Input @Optional abstract public Property<String> getIssues();
+    void issues(String issues) { getIssues().set(issues); }
+
+    @Input @Optional abstract public Property<String> getSources();
+    void sources(String sources) { getSources().set(sources); }
 }
 
 @NoArgsConstructor

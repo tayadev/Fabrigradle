@@ -20,15 +20,9 @@ fabrigradle {
     mixins 'TestMixin', 'AnotherMixin'
     client 'ClientMixin'
     server 'ServerMixin'
-    refmap 'idk'
-    priority 10
-    plugin 'MixinPlugin'
     required true
     minVersion '0.8'
-    compatibilityLevel 'JAVA_8'
-    // injectors {
-      // defaultRequire 1
-    // }
+    compatibilityLevel 'JAVA_17'
   }
 
 }
