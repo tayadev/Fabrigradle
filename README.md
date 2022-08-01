@@ -1,5 +1,7 @@
 # Fabrigradle
 
+![Fabrigradle](assets/fabrigradle_logo_with_text.png)
+
 An intelligent Gradle plugin used to develop mods for [fabric](https://fabricmc.net).
 
 ## Example Usage
