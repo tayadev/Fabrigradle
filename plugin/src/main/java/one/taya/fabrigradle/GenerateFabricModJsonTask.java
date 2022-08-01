@@ -25,7 +25,7 @@ import one.taya.fabrigradle.FabricModJson.NestedJarEntry;
 import one.taya.fabrigradle.FabricModJson.Person;
 import one.taya.fabrigradle.FabricModJson.VersionRange;
 
-public abstract class GenerateFabricModJson extends DefaultTask {
+public abstract class GenerateFabricModJsonTask extends DefaultTask {
 
     @OutputFile
     public File getOutputFile() {
@@ -87,7 +87,7 @@ public abstract class GenerateFabricModJson extends DefaultTask {
         Icon icon = null;
         if(ext.getIcon().isPresent()) {
             icon = new Icon(ext.getIcon().get());
-        } else if(ext.getIcons() != null) {
+        } else if(ext.getIcons().icons.size() > 0) {
             icon = new Icon(ext.getIcons().icons.stream().collect(Collectors.toMap(i -> i.size, i -> i.file)));
         }
 
@@ -115,9 +115,6 @@ public abstract class GenerateFabricModJson extends DefaultTask {
             .setMixins(ext.getMixins().getPackageName().isPresent() ? List.of(new Mixin("mixins.json")) : null);
 
         new ObjectMapper().writeValue(outFile, fmj);
-
-        System.out.println("Generated fabric.mod.json");
-        System.out.println("=> " + getOutputFile().getAbsolutePath());
     }
 
 }

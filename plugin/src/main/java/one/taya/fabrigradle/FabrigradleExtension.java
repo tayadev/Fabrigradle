@@ -76,7 +76,10 @@ public abstract class FabrigradleExtension {
     public void icons(Action<? super Icons> action) { action.execute(getIcons()); }
 
     @Input @Optional abstract public Property<String> getIcon();
-    void icon(String icon) { getIcon().set(icon); }
+    public void icon(String icon) { getIcon().set(icon); }
+
+    @Input @Optional abstract public Property<Boolean> getAcceptEula();
+    public void eula(boolean eula) { getAcceptEula().set(eula); }
 }
 
 @NoArgsConstructor

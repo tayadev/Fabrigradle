@@ -1,3 +1,11 @@
 pluginManagement {
     includeBuild '../plugin'
+
+    // The goal would be to make this auto applied through fabrigradle
+    repositories {
+        maven {
+            url = 'https://maven.fabricmc.net'
+        }
+        mavenCentral()
+    }
 }

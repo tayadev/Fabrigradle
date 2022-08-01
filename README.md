@@ -29,3 +29,6 @@ fabrigradle {
   }
 }
 ```
+
+For a full working example refer to [./example](./example) \
+For further documentation refer to the [wiki](https://github.com/tayadev/Fabrigradle/wiki)

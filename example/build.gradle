@@ -8,21 +8,12 @@ fabrigradle {
   id 'example'
   name 'Cool Name'
   authors {
-    name 'Me!' email 'email@example.org'
+    name 'Taya' email 'taya@taya.one'
   }
   environment 'server'
   entrypoints {
-    main 'one.taya.mod.Mod'
+    main 'one.taya.example.ExampleMod'
   }
 
-  mixins {
-    packageName 'one.taya.mod.mixin'
-    mixins 'TestMixin', 'AnotherMixin'
-    client 'ClientMixin'
-    server 'ServerMixin'
-    required true
-    minVersion '0.8'
-    compatibilityLevel 'JAVA_17'
-  }
-
+  eula true
 }

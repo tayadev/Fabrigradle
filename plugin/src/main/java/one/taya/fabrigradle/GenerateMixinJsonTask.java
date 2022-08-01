@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import one.taya.fabrigradle.MixinJson.MixinJson;
 
-public abstract class GenerateMixinJson extends DefaultTask {
+public abstract class GenerateMixinJsonTask extends DefaultTask {
        @OutputFile
     public File getOutputFile() {
         File folder = getProject().file("build/resources/main");
@@ -49,9 +49,6 @@ public abstract class GenerateMixinJson extends DefaultTask {
             .setMinVersion(m.getMinVersion().getOrNull());
 
         new ObjectMapper().writeValue(outFile, mj);
-
-        System.out.println("Generated mixins.json");
-        System.out.println("=> " + getOutputFile().getAbsolutePath());
     }
 
 }
