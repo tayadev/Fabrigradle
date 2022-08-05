@@ -26,6 +26,15 @@ public class FabrigradleTestBuild {
             plugins {
                 id 'one.taya.fabrigradle'
             }
+
+            fabrigradle {
+                versions {
+                    minecraft '1.19.2'
+                    mappings '1.19.2+build.1'
+                    loader '0.14.9'
+                    fabricApi '0.58.6+1.19.2'
+                }
+            }
         """);
     }
 

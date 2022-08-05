@@ -28,6 +28,14 @@ version '0.0.1-SNAPSHOT' // Your project version
 
 // Configuration for Fabrigradle
 fabrigradle {
+
+  versions { // look up newest versions on https://fabricmc.net/develop
+    minecraft '1.19.2'
+    mappings '1.19.2+build.1'
+    loader '0.14.9'
+    fabricApi '0.58.6+1.19.2'
+  }
+
   entrypoints {
     main 'one.taya.example.ExampleMod' // The main class of your mod
   }
@@ -36,6 +44,9 @@ fabrigradle {
 This is the minimal setup to get your mod to build and run, for adding further configuration refer to the following sections explaining the different configuration options.
 
 ## Configuration Options
+
+### Versions
+- TODO: Document
 
 ### Id
 - Has to be all lowercase with only alphanumeric characters
@@ -65,40 +76,38 @@ fabrigradle {
 ```
 
 ### Entrypoints
-- To be documented
+- TODO: Document
 ### Jars
-- To be documented
+- TODO: Document
 ### LanguageAdapters
-- To be documented
+- TODO: Document
 ### Mixins
-- To be documented
+- TODO: Document
 ### Accesswidener
-- To be documented
+- TODO: Document
 ### Depends
-- To be documented
+- TODO: Document
 ### Recommends
-- To be documented
+- TODO: Document
 ### Suggests
-- To be documented
+- TODO: Document
 ### Conflicts
-- To be documented
+- TODO: Document
 ### Breaks
-- To be documented
+- TODO: Document
 ### Name
-- To be documented
+- TODO: Document
 ### Description
-- To be documented
+- TODO: Document
 ### Authors
-- To be documented
+- TODO: Document
 ### Contributors
-- To be documented
+- TODO: Document
 ### Contact
-- To be documented
+- TODO: Document
 ### License
-- To be documented
+- TODO: Document
 ### Icon
-- To be documented
+- TODO: Document
 ### Eula
-- To be documented
-### ApiVersion
-- WIP
+- TODO: Document

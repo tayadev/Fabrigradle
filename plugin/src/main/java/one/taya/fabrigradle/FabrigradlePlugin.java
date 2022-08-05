@@ -28,21 +28,18 @@ public class FabrigradlePlugin implements Plugin<Project> {
         
         project.getTasks().register("acceptEula", AcceptEulaTask.class);
 
-        project.getPlugins().apply("fabric-loom");
-        
-        // TODO: make versions dynamic
-        project.getDependencies().add("minecraft", "com.mojang:minecraft:1.19.1");
-        project.getDependencies().add("mappings", "net.fabricmc:yarn:1.19.1+build.1:v2");
-        project.getDependencies().add("modImplementation", "net.fabricmc:fabric-loader:0.14.8");
-        project.getDependencies().add("modImplementation", "net.fabricmc.fabric-api:fabric-api:0.58.4+1.19.1");
-        
-        project.getTasks().findByName("compileJava").dependsOn("generateFabricModJson");
-
         project.afterEvaluate(p -> {
             ext.getId().convention(project.getName());
             ext.getVersion().convention(project.getVersion().toString());
-
-            if(ext.getAcceptEula().get()) project.getTasks().findByName("configureLaunch").dependsOn("acceptEula");
+            
+            project.getPlugins().apply("fabric-loom");
+            project.getDependencies().add("minecraft", "com.mojang:minecraft:" + ext.getVersions().minecraft);
+            project.getDependencies().add("mappings", "net.fabricmc:yarn:" + ext.getVersions().mappings + ":v2");
+            project.getDependencies().add("modImplementation", "net.fabricmc:fabric-loader:" + ext.getVersions().loader);
+            project.getDependencies().add("modImplementation", "net.fabricmc.fabric-api:fabric-api:" + ext.getVersions().fabricApi);
+            
+            project.getTasks().findByName("compileJava").dependsOn("generateFabricModJson");
+            if(ext.getAcceptEula().getOrElse(false)) project.getTasks().findByName("configureLaunch").dependsOn("acceptEula");
         });
 
     }

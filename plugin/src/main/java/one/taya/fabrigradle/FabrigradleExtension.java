@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 import one.taya.fabrigradle.FabricModJson.Environment;
 
 public abstract class FabrigradleExtension {
+
+    @Nested abstract public Versions getVersions();
+    public void versions(Action<? super Versions> action) { action.execute(getVersions()); }
+
     @Input @Optional abstract public Property<String> getId();
     void id(String id) { getId().set(id); }
 
@@ -80,6 +84,21 @@ public abstract class FabrigradleExtension {
 
     @Input @Optional abstract public Property<Boolean> getAcceptEula();
     public void eula(boolean eula) { getAcceptEula().set(eula); }
+}
+
+@NoArgsConstructor
+abstract class Versions {
+    @Input @Getter String minecraft;
+    void minecraft(String version) { this.minecraft = version; }
+
+    @Input @Getter String mappings;
+    void mappings(String version) { this.mappings = version; }
+
+    @Input @Getter String loader;
+    void loader(String version) { this.loader = version; }
+
+    @Input @Getter String fabricApi;
+    void fabricApi(String version) { this.fabricApi = version; }
 }
 
 @NoArgsConstructor
