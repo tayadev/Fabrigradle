@@ -17,6 +17,7 @@ fabrigradle {
   name 'Cool Name'
   authors {
     name 'Taya' email 'taya@taya.one'
+    // person name: 'Taya', email: 'taya@taya.one'
   }
   environment 'server'
   entrypoints {

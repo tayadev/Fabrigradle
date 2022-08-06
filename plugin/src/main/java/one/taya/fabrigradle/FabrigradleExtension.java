@@ -14,6 +14,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import one.taya.fabrigradle.FabricModJson.Environment;
 
+// TODO:
+// potential major refactor and api change
+// by using the following DSL api
+// implementation group: 'net.fabricmc', name: 'fabric-loom', version: '0.12-SNAPSHOT'
+
 public abstract class FabrigradleExtension {
 
     @Nested abstract public Versions getVersions();

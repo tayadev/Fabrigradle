@@ -5,16 +5,7 @@ import org.gradle.api.Project;
 
 public class FabrigradlePlugin implements Plugin<Project> {
     public void apply(Project project) {
-        
-        // This doesn't work :(
-        // project.getGradle().beforeSettings(settings -> {
-        //     RepositoryHandler repos = settings.getPluginManagement().getRepositories();
-        //     repos.maven(repo -> {
-        //         repo.setUrl("https://maven.fabricmc.net");
-        //     });
-        //     repos.mavenCentral();
-        // });
-        
+
         FabrigradleExtension ext = project.getExtensions().create("fabrigradle", FabrigradleExtension.class);
         
         project.getTasks().register("generateFabricModJson", GenerateFabricModJsonTask.class, task -> {
@@ -27,12 +18,13 @@ public class FabrigradlePlugin implements Plugin<Project> {
         });
         
         project.getTasks().register("acceptEula", AcceptEulaTask.class);
-
+        
         project.afterEvaluate(p -> {
             ext.getId().convention(project.getName());
             ext.getVersion().convention(project.getVersion().toString());
             
             project.getPlugins().apply("fabric-loom");
+
             project.getDependencies().add("minecraft", "com.mojang:minecraft:" + ext.getVersions().minecraft);
             project.getDependencies().add("mappings", "net.fabricmc:yarn:" + ext.getVersions().mappings + ":v2");
             project.getDependencies().add("modImplementation", "net.fabricmc:fabric-loader:" + ext.getVersions().loader);
