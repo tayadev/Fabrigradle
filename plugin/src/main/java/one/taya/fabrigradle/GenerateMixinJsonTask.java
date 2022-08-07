@@ -16,7 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import one.taya.fabrigradle.MixinJson.MixinJson;
 
 public abstract class GenerateMixinJsonTask extends DefaultTask {
-       @OutputFile
+
+    @OutputFile
     public File getOutputFile() {
         File folder = getProject().file("build/resources/main");
         folder.mkdirs();

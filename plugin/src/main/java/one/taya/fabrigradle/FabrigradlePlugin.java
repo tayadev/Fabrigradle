@@ -23,7 +23,7 @@ public class FabrigradlePlugin implements Plugin<Project> {
             ext.getId().convention(project.getName());
             ext.getVersion().convention(project.getVersion().toString());
             
-            project.getPlugins().apply("fabric-loom");
+            project.getPluginManager().apply("fabric-loom");
 
             project.getDependencies().add("minecraft", "com.mojang:minecraft:" + ext.getVersions().minecraft);
             project.getDependencies().add("mappings", "net.fabricmc:yarn:" + ext.getVersions().mappings + ":v2");

@@ -2,11 +2,9 @@
 
 # An intelligent Gradle plugin used to develop mods for [fabric](https://fabricmc.net).
 
-<!-- <div align="center"> -->
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
-[![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)](https://gradle.org/)
+[![Gradle Plugin](https://img.shields.io/maven-metadata/v?label=Gradle&logo=Gradle&metadataUrl=https://plugins.gradle.org/m2/one/taya/fabrigradle/one.taya.fabrigradle.gradle.plugin/maven-metadata.xml&style=for-the-badge&labelColor=02303a)](https://plugins.gradle.org/plugin/one.taya.fabrigradle)
 [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/tayacrystal)
-<!-- </div> -->
 
 ## Purpose
 This project provides a centralized configuration with helpful defaults to help you get your fabric mod projects started faster and to keep them more maintainable and reduce mistakes over their development lifecycle.

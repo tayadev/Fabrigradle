@@ -14,7 +14,6 @@ pluginBundle {
     tags = ['fabricmc', 'minecraft']     
 }
 
-
 repositories {
     maven {
         name = 'Fabric'
@@ -24,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.fabricmc:fabric-loom:0.12-SNAPSHOT'
+    implementation 'fabric-loom:fabric-loom.gradle.plugin:0.13.6'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
     implementation 'commons-io:commons-io:2.11.0'
 
