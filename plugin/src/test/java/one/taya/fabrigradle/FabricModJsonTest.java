@@ -14,7 +14,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import one.taya.fabrigradle.FabricModJson.ContactInformation;
 import one.taya.fabrigradle.FabricModJson.Entrypoint;
 import one.taya.fabrigradle.FabricModJson.EntrypointContainer;
 import one.taya.fabrigradle.FabricModJson.Environment;
@@ -30,16 +29,14 @@ public class FabricModJsonTest {
     
     @Test
     public void exampleModFabricModJson() throws JSONException, IOException, URISyntaxException {
-
-        // Using example from fabric example mod to test this out
-        FabricModJson fmj = new FabricModJson()
+        FabricModJson fabricModJson = new FabricModJson()
             .setSchemaVersion(1)
             .setId("modid")
             .setVersion("1.0.0")
             .setName("Example Mod")
             .setDescription("This is an example description! Tell everyone what your mod is about!")
             .setAuthors(List.of(new Person("Me!")))
-            .setContact(new ContactInformation().setHomepage("https://fabricmc.net/").setSources("https://github.com/FabricMC/fabric-example-mod"))
+            .setContact(Map.of("homepage", "https://fabricmc.net/", "sources", "https://github.com/FabricMC/fabric-example-mod"))
             .setLicense(new License("CC0-1.0"))
             .setIcon(new Icon("assets/modid/icon.png"))
             .setEnvironment(Environment.ALL)
@@ -55,16 +52,14 @@ public class FabricModJsonTest {
                 "another-mod", new VersionRange("*")
             ));
 
-        String serialized = new ObjectMapper().writeValueAsString(fmj);
+        String serialized = new ObjectMapper().writeValueAsString(fabricModJson);
         String expected = Files.readString(Paths.get(getClass().getClassLoader().getResource("exampleMod-fabric.mod.json").toURI()));
-
         JSONAssert.assertEquals(expected, serialized, JSONCompareMode.STRICT);
     }
     
     @Test
     public void maxModFabricModJson() throws JSONException, IOException, URISyntaxException {
-
-        FabricModJson fmj = new FabricModJson()
+        FabricModJson fabricModJson = new FabricModJson()
             .setSchemaVersion(1)
             .setId("example")
             .setVersion("0.0.1")
@@ -87,21 +82,20 @@ public class FabricModJsonTest {
             .setConflicts(Map.of("mod", new VersionRange("1.0.0")))
             .setName("Example Mod")
             .setDescription("Mod Description")
-            .setContact(new ContactInformation()
-                .setEmail("mail@example.org")
-                .setIrc("irc://example.org")
-                .setHomepage("https://example.org")
-                .setIssues("https://example.org")
-                .setSources("git://example.org")
-            )
-            .setAuthors(List.of(new Person("You", new ContactInformation().setEmail("mail@example.org"))))
-            .setContributors(List.of(new Person("You", new ContactInformation().setEmail("mail@example.org"))))
+            .setContact(Map.of(
+                "email", "mail@example.org",
+                "irc", "irc://example.org",
+                "homepage", "https://example.org",
+                "issues", "https://example.org",
+                "sources", "git://example.org"
+            ))
+            .setAuthors(List.of(new Person("You", Map.of("email", "mail@example.org"))))
+            .setContributors(List.of(new Person("You", Map.of("email", "mail@example.org"))))
             .setLicense(new License("CC0-1.0", "GPL-3.0"))
             .setIcon(new Icon(Map.of(64, "assets/modid/icon-64.png", 128, "assets/modid/icon-128.png")));
 
-        String serialized = new ObjectMapper().writeValueAsString(fmj);
+        String serialized = new ObjectMapper().writeValueAsString(fabricModJson);
         String expected = Files.readString(Paths.get(getClass().getClassLoader().getResource("max-fabric.mod.json").toURI()));
-
         JSONAssert.assertEquals(expected, serialized, JSONCompareMode.STRICT);
     }
 }

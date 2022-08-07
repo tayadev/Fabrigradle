@@ -1,5 +1,5 @@
 plugins {
-  id 'one.taya.fabrigradle' version '3.0.0'
+  id 'one.taya.fabrigradle' version '4.0.0'
 }
  
 version '1.0.0'
@@ -7,22 +7,20 @@ version '1.0.0'
 fabrigradle {
 
   versions {
-    minecraft '1.19.2'
-    mappings '1.19.2+build.1'
-    loader '0.14.9'
-    fabricApi '0.58.6+1.19.2'
+    minecraft '1.19'
   }
 
   id 'example'
   name 'Cool Name'
-  authors {
-    name 'Taya' email 'taya@taya.one'
-    // person name: 'Taya', email: 'taya@taya.one'
-  }
   environment 'server'
+
   entrypoints {
     main 'one.taya.example.ExampleMod'
   }
-  
+
   eula true
+}
+
+dependencies {
+  	// modImplementation "net.fabricmc.fabric-api:fabric-api:0.59.0+1.19.2"
 }

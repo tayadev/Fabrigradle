@@ -2,9 +2,11 @@ package one.taya.fabrigradle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Nested;
@@ -13,15 +15,11 @@ import org.gradle.api.tasks.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import one.taya.fabrigradle.FabricModJson.Environment;
-
-// TODO:
-// potential major refactor and api change
-// by using the following DSL api
-// implementation group: 'net.fabricmc', name: 'fabric-loom', version: '0.12-SNAPSHOT'
+import one.taya.fabrigradle.FabricModJson.Person;
 
 public abstract class FabrigradleExtension {
 
-    @Nested abstract public Versions getVersions();
+    @Nested @Optional abstract public Versions getVersions();
     public void versions(Action<? super Versions> action) { action.execute(getVersions()); }
 
     @Input @Optional abstract public Property<String> getId();
@@ -75,8 +73,8 @@ public abstract class FabrigradleExtension {
     @Nested abstract public People getContributors();
     public void contributors(Action<? super People> action) { action.execute(getContributors()); }
 
-    @Nested abstract public Contact getContact();
-    public void contact(Action<? super Contact> action) { action.execute(getContact()); }
+    @Input @Optional abstract public MapProperty<String, String> getContact();
+    public void contact(Map<String, String> map) { getContact().set(map); }
 
     @Input @Optional abstract public ListProperty<String> getLicense();
     public void license(String... license) { getLicense().addAll(license); }
@@ -93,17 +91,17 @@ public abstract class FabrigradleExtension {
 
 @NoArgsConstructor
 abstract class Versions {
-    @Input @Getter String minecraft;
-    void minecraft(String version) { this.minecraft = version; }
+    @Input @Optional abstract public Property<String> getMinecraft();
+    public void minecraft(String version) { getMinecraft().set(version); }
 
-    @Input @Getter String mappings;
-    void mappings(String version) { this.mappings = version; }
+    @Input @Optional abstract public Property<String> getMappings();
+    public void mappings(String version) { getMappings().set(version); }
 
-    @Input @Getter String loader;
-    void loader(String version) { this.loader = version; }
+    @Input @Optional abstract public Property<String> getLoader();
+    public void loader(String version) { getLoader().set(version); }
 
-    @Input @Getter String fabricApi;
-    void fabricApi(String version) { this.fabricApi = version; }
+    @Input @Optional abstract public Property<String> getFabricApi();
+    public void fabricApi(String version) { getFabricApi().set(version); }
 }
 
 @NoArgsConstructor
@@ -159,42 +157,17 @@ class Dependency {
 @NoArgsConstructor
 class People {
     @Nested @Optional @Getter List<Person> people = new ArrayList<Person>();
-    Person name(String name) {
-        Person person = new Person(name);
-        people.add(person);
-        return person;
+
+    void person(Map<String, String> map) {
+        String name = map.get("name");
+        map.remove("name");
+        people.add(
+            new Person(
+                name,
+                map
+            )
+        );
     }
-}
-
-class Person {
-    // TODO: figure out how to allow custom properties?
-    @Input @Optional @Getter String name;
-    @Input @Optional @Getter String email;
-    @Input @Optional @Getter String irc;
-    @Input @Optional @Getter String homepage;
-
-    Person(String name) { this.name = name; }
-    Person email(String email) { this.email = email; return this; }
-    Person irc(String irc) { this.irc = irc; return this; }
-    Person homepage(String homepage) { this.homepage = homepage; return this; }
-}
-
-@NoArgsConstructor
-abstract class Contact {
-    @Input @Optional abstract public Property<String> getEmail();
-    void email(String email) { getEmail().set(email); }
-
-    @Input @Optional abstract public Property<String> getIrc();
-    void irc(String irc) { getIrc().set(irc); }
-
-    @Input @Optional abstract public Property<String> getHomepage();
-    void homepage(String homepage) { getHomepage().set(homepage); }
-
-    @Input @Optional abstract public Property<String> getIssues();
-    void issues(String issues) { getIssues().set(issues); }
-
-    @Input @Optional abstract public Property<String> getSources();
-    void sources(String sources) { getSources().set(sources); }
 }
 
 @NoArgsConstructor

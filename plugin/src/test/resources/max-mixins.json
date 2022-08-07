@@ -1,0 +1,18 @@
+{
+    "mixins": [ "mixinA", "mixinB", "mixinC" ],
+    "server": [ "serverMixinA", "serverMixinB", "serverMixinC" ],
+    "client": [ "clientMixinA", "clientMixinB", "clientMixinC" ],
+    "compatibilityLevel": "compatibilityLevel",
+    "injectors": {
+        "injectorA": 1,
+        "injectorB": 2
+    },
+    "minVersion": "minVersion",
+    "package": "package",
+    "plugin": "plugin",
+    "priority": 1,
+    "refmap": "refmap",
+    "required": true,
+    "setSourceFile": true,
+    "verbose": true
+}

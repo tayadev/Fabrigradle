@@ -1,9 +1,9 @@
 package one.taya.fabrigradle;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.OutputFile;
@@ -18,11 +18,7 @@ import one.taya.fabrigradle.MixinJson.MixinJson;
 public abstract class GenerateMixinJsonTask extends DefaultTask {
 
     @OutputFile
-    public File getOutputFile() {
-        File folder = getProject().file("build/resources/main");
-        folder.mkdirs();
-        return new File(folder, "mixins.json");
-    }
+    public abstract RegularFileProperty getOutputFile();
 
     @Nested
     abstract Property<FabrigradleExtension> getConfig();
@@ -30,12 +26,10 @@ public abstract class GenerateMixinJsonTask extends DefaultTask {
     @TaskAction
     public void generateMixinJson() throws JsonGenerationException, JsonMappingException, IOException {
 
-        File outFile = getOutputFile();
         FabrigradleExtension ext = getConfig().get();
         Mixins m = ext.getMixins();
 
-
-        MixinJson mj = new MixinJson()
+        MixinJson mixinJson = new MixinJson()
             .setRequired(m.getRequired().getOrNull())
             .setPackageName(m.getPackageName().getOrNull())
             .setMixins(m.getMixins().getOrNull())
@@ -49,7 +43,7 @@ public abstract class GenerateMixinJsonTask extends DefaultTask {
             .setPriority(m.getPriority().getOrNull())
             .setMinVersion(m.getMinVersion().getOrNull());
 
-        new ObjectMapper().writeValue(outFile, mj);
+        new ObjectMapper().writeValue(getOutputFile().get().getAsFile(), mixinJson);
     }
 
 }

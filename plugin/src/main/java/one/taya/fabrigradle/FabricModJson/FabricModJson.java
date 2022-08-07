@@ -88,7 +88,7 @@ public class FabricModJson {
 
     /** Contact information for the project */
     @JsonProperty("contact")
-    ContactInformation contact;
+    Map<String, String> contact;
 
     /** The license the mod uses */
     @JsonProperty("license")
